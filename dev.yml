@@ -1,0 +1,23 @@
+name: aoc-2022
+
+type: ruby
+
+up:
+  - ruby: 3.1.3
+  - bundler
+  - python: '3.10.8'
+
+commands:
+  console:
+    desc: 'start a console'
+    run: bin/console
+  scaffold:
+    run: >
+      bundle exec aoc_cli scaffold $1 ;
+      AOC_COOKIE=$(cat .aoc_cookie) bundle exec aoc_cli download $1
+  download:
+    run: >  
+      AOC_COOKIE=$(cat .aoc_cookie) bundle exec aoc_cli download $1
+  solve:
+    run: >
+      bundle exec aoc_cli solve $1

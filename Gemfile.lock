@@ -1,0 +1,27 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    advent_of_code_cli (0.1.6)
+      thor (>= 1.2.0)
+    language_server-protocol (3.17.0.2)
+    prettier_print (1.1.0)
+    priority_queue_cxx (0.3.5)
+    ruby-lsp (0.3.6)
+      language_server-protocol (~> 3.17.0)
+      sorbet-runtime
+      syntax_tree (>= 4.0.2, < 5.0.0)
+    sorbet-runtime (0.5.10588)
+    syntax_tree (4.3.0)
+      prettier_print (>= 1.0.2)
+    thor (1.2.1)
+
+PLATFORMS
+  arm64-darwin-21
+
+DEPENDENCIES
+  advent_of_code_cli
+  priority_queue_cxx
+  ruby-lsp (~> 0.3.6)
+
+BUNDLED WITH
+   2.3.26
