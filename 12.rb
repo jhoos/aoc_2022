@@ -118,9 +118,9 @@ module Day12
       1
     end
 
-    def distance(x, y, cur_height)
-      (@end[0] - x)**2 + (@end[1] - y)**2 +
-        (terrain_at(x, y).height - terrain_at(*@end).height)**2 +
+    def distance(x, y, cur_height, goal)
+      (goal[0] - x)**2 + (goal[1] - y)**2 +
+        (terrain_at(x, y).height - terrain_at(*goal).height)**2 +
         (cur_height - terrain_at(x, y).height) * 100
     end
 
@@ -138,9 +138,9 @@ module Day12
       [a[0] + b[0], a[1] + b[1]]
     end
 
-    def walk()
+    def walk(start, goal)
       q = FastContainers::PriorityQueue.new(:min)
-      q.push([@start, 0], 0)
+      q.push([start, 0], 0)
 
       until q.empty?
         cur_xy, score = q.next
@@ -153,18 +153,18 @@ module Day12
             can_walk(cur_xy, d) && terrain.score > score && !terrain.walked?
           end
           .map do |d|
-            [d, distance(*vec_add(cur_xy, d), terrain_at(*cur_xy).height)]
+            [d, distance(*vec_add(cur_xy, d), terrain_at(*cur_xy).height, goal)]
           end
           .sort_by { |dd| dd[1] }
           .each do |dd|
             new_xy = vec_add(cur_xy, dd[0])
             terrain_at(*new_xy).walk(cur_xy, score + 1)
-            return score + 1 if new_xy == @end
+            return score + 1 if new_xy == goal
             puts " -> #{new_xy} #{score**2 + dd[1]} #{score + 1}"
             # I ended up having to weight the "distance to here" score rediculously to force the algorithm to go
             # around a hill the right way, which sadly devolves this into a BFS. Probably this means the "distance to
             # goal" score is entirely too naive.
-            q.push([new_xy, score + 1], score**4 + dd[1])
+            q.push([new_xy, score + 1], (score**2).abs + dd[1])
           end
       end
     end
@@ -172,9 +172,9 @@ module Day12
     def part_one(nput)
       parse_input(nput)
       render_terrain
-      score = walk
+      score = walk(@end, @start)
       @path = [@end]
-      @path += [terrain_at(*@path[-1]).from] while @path[-1] != @start
+      @path += [terrain_at(*@path[-1]).from] while @path[-1] != @end
       render_terrain_with_path
       puts "\n" * 6
       score

@@ -3,6 +3,7 @@ GEM
   specs:
     advent_of_code_cli (0.1.6)
       thor (>= 1.2.0)
+    dijkstra_fast (1.5.3)
     language_server-protocol (3.17.0.2)
     prettier_print (1.1.0)
     priority_queue_cxx (0.3.5)
@@ -20,6 +21,7 @@ PLATFORMS
 
 DEPENDENCIES
   advent_of_code_cli
+  dijkstra_fast
   priority_queue_cxx
   ruby-lsp (~> 0.3.6)
 

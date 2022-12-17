@@ -4,5 +4,6 @@ source "https://rubygems.org"
 
 gem "advent_of_code_cli"
 gem "priority_queue_cxx"
+gem "dijkstra_fast"
 
 gem "ruby-lsp", "~> 0.3.6", :group => :development
