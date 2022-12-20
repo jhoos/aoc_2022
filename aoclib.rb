@@ -81,14 +81,11 @@ module AocLibrary
       @xheight = xheight
       debug "grid size after translation: #{xwidth}, #{xheight}"
       for y in 0..xheight
-        @grid[y] = []
-        for x in 0..xwidth
-          @grid[y][x] = initial
-        end
+        @grid[y] = [initial] * xwidth
       end
 
-      print "\033[2J\033[H"
-      print "\n" * (@xheight + 2)
+      print "\033[2J\033[H" if ANIMATE
+      print "\n" * (@xheight + 2) if ANIMATE
       render
     end
 
@@ -100,7 +97,7 @@ module AocLibrary
     def set(x, y, char)
       x2, y2 = @xlate.call(x, y)
       @grid[y2][x2] = char
-      print "\0337\033[#{y2 + 1};#{x2 + 1}H#{char}\0338"
+      print "\0337\033[#{y2 + 1};#{x2 + 1}H#{char}\0338" if ANIMATE
     end
 
     def draw(x1, y1, x2, y2, char)
@@ -120,9 +117,9 @@ module AocLibrary
     end
 
     def render
-      print "\0337\033[H"
-      @grid.each { print "#{_1.join("")}\033[0K\n" }
-      print "\033[0K\0338"
+      print "\0337\033[H" if ANIMATE
+      @grid.each { print "#{_1.join("")}\033[0K\n" } if ANIMATE
+      print "\033[0K\0338" if ANIMATE
     end
   end
 end
